@@ -26,7 +26,7 @@ const Wrapper = styled.div`
   width: 550px;
   background-color: #e4efe9;
   height: fit-content;
-  margin: 50px;
+  margin: 48px;
   padding: 60px;
   border-radius: 4px;
   box-shadow: 10px 8px 8px rgb(165, 161, 161);
@@ -66,8 +66,30 @@ const Button = styled.button`
   }
 `;
 
-const TextStatistics = styled.h2`
-  margin-bottom: 20px;
+const Message = styled.p`
+  font-size: 18px;
+  color: #696969;
 `;
 
-export { GlobalStyle, Wrapper, Text, List, Item, Button, TextStatistics };
+const Total = styled.p`
+  font-size: 18px;
+  margin-top: 18px;
+  margin-bottom: 8px;
+`;
+
+const PositiveFeedback = styled.p`
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+`;
+export {
+  GlobalStyle,
+  Wrapper,
+  Text,
+  List,
+  Item,
+  Button,
+  Message,
+  Total,
+  PositiveFeedback,
+};

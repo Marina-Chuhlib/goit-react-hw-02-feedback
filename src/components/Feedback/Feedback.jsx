@@ -1,78 +1,75 @@
 import { Component } from 'react';
 
-import {
-  Text,
-  List,
-  Item,
-  Wrapper,
-  Button,
-  TextStatistics,
-} from './Feedback.styled';
+import Statistics from './Statistics/Statistics';
+import FeedbackOptions from './FeedbackOptions/FeedbackOptions';
+import Section from './Section/Section';
+import Notification from './Notification/Notification';
+
+import { List } from './Feedback.styled';
+
+const feedbackOptions = ['good', 'neutral', 'bad'];
 
 class Feedback extends Component {
-    state = {
+  state = {
     good: 0,
     neutral: 0,
     bad: 0,
-   
-    };
-
-
-  leaveFeedback = (name) => {
-    this.setState(prevState => {
-      return{ [name]: prevState[name] + 1}
-    })
-    console.log("click");
-    
   };
 
-  calcTotal() {
+  onLeaveFeedback = name => {
+    this.setState(prevState => {
+      return { [name]: prevState[name] + 1 };
+    });
+  };
+
+  countTotalFeedback() {
     const { good, neutral, bad } = this.state;
     const total = good + neutral + bad;
     return total;
-    
   }
 
+  countPositiveFeedbackPercentage(propName) {
+    const total = this.countTotalFeedback();
+
+    if (!total) {
+      return 0;
+    }
+    const vote = this.state[propName];
+    const result = ((vote / total) * 100).toFixed(2);
+
+    return Number(result);
+  }
 
   render() {
-    const { good,neutral, bad} = this.state;
+    const { good, neutral, bad } = this.state;
+    const total = this.countTotalFeedback();
+    const positivePercentage = this.countPositiveFeedbackPercentage('good');
 
     return (
       <>
-      <Wrapper>
+        <Section title="Please leave feedback">
+          <List>
+            <FeedbackOptions
+              options={feedbackOptions}
+              onLeaveFeedback={this.onLeaveFeedback}
+            />
+          </List>
+        </Section>
 
-        <Text>Please leave feedback</Text>
-
-        <List>
-          <Item>
-            <Button type="button"  onClick={this.handleClick}>
-              good
-            </Button>
-          </Item>
-          <Item>
-            <Button type="button"  onClick={this.handleClick}>
-              neutral
-            </Button>
-          </Item>
-
-          <Item>
-            <Button type="button"  onClick={this.handleClick}>
-              bad
-            </Button>
-          </Item>
-        </List>
-</Wrapper>
-       <Wrapper>
-        <TextStatistics>Statistics </TextStatistics>
-
-        <ul>
-            <Item>good: {good}</Item>
-             <Item>neutral: { neutral}</Item>
-             <Item> bad: {bad}</Item>
-          </ul>
-          
-        </Wrapper>
-        </>
+        <Section title="Statistics">
+          {!total ? (
+            <Notification message="There is no feedback" />
+          ) : (
+            <Statistics
+              good={good}
+              neutral={neutral}
+              bad={bad}
+              total={total}
+              positivePercentage={positivePercentage}
+            />
+          )}
+        </Section>
+      </>
     );
   }
 }
