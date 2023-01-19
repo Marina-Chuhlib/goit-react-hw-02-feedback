@@ -1,17 +1,15 @@
 import Feedback from './Feedback/Feedback';
 
-import { GlobalStyle } from "./Feedback/Feedback.styled";
+import { GlobalStyle } from './Feedback/Feedback.styled';
 
-
-function App () {
+function App() {
   return (
     <>
       <Feedback />
-     
+
       <GlobalStyle />
     </>
-  
   );
-};
+}
 
 export default App;
